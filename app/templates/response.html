@@ -1,0 +1,99 @@
+<div class="container" id="dvresult">
+    <div class="mt-4">&nbsp;</div>
+    <div class="row g-4 justify-content-md-center">
+        <div class="col-lg-3">
+            <img src="{{data.thumbnail}}" class="img-fluid rounded">
+            <p class="text-light mt-3">{{data.title}}</p>
+
+        </div>
+        <div class="col-lg-5">
+            <div class="card h-lg">
+                <div class="card-header bg-white">
+                    <div class="row align-items-center">
+                        <h6 style="text-align:center;" class="mb-0 text-dark"> Videos</h6>
+                    </div>
+                </div>
+                <div class="rounded overflow-auto scrollbar-primary" style="max-height:200px">
+                    <div class="card-body bg-white">
+                        {% for i in data.stream %}
+                        <div class="row g-0 align-items-center py-2 position-relative border-bottom border-200">
+                            <div class="col-8" style="text-align:left">
+                                {%if i.type=='audio' %}
+                                    <i class="fas fa-volume-up text-danger"></i>
+                                {%else%}
+                                    <i class="bi bi-youtube text-danger"></i> &nbsp; {{i.resolution}}
+                                {%endif%}
+                                
+                                &nbsp; {{i.mime_type}}
+
+                            </div>
+                            <div class="col-4" style="text-align:center;">
+                                <a href="{{ url_for('download', itag=i.itag) }}"
+                                    id="downloadfile{{ i.itag }}"
+                                    data-itag="{{ i.itag }}">
+                                    <button class="btn btn-primary btn-sm" type="button">
+                                        <i class="bi bi-download"></i>&nbsp; Download
+                                    </button>
+                                </a>
+                                
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+
+<script>
+    function handleDownloadClick(link) {
+        
+        const downloadLink = link;
+        const itag = downloadLink.getAttribute('data-itag');
+        const progressBar = document.getElementById('downloadProgress');
+        const progressText = document.getElementById('progressText');
+        
+        downloadLink.onclick = null;  
+        
+        progressBar.style.display = 'block';
+        
+        
+        fetch(downloadLink.getAttribute('href'))
+            .then(response => {
+                const totalSize = parseInt(response.headers.get('content-length'));
+                let bytesSent = 0;
+
+                const reader = response.body.getReader();
+                function read() {
+                    return reader.read().then(({ done, value }) => {
+                        if (done) {
+                            progressBar.style.display = 'none';
+                            downloadLink.onclick = function() {
+                                handleDownloadClick(this);
+                            };
+                            return;
+                        }
+
+                        bytesSent += value.length;
+                        const progressPercent = (bytesSent / totalSize) * 100;
+
+                        progressText.textContent = '${progressPercent.toFixed(2)}%';
+
+                        return read();
+                    });
+                }
+
+                return read();
+            })
+            .catch(error => {
+                console.error('Error downloading:', error);
+                progressBar.style.display = 'none';
+                downloadLink.onclick = function() {
+                    handleDownloadClick(this);
+                };
+            });
+    }
+</script>

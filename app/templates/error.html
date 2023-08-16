@@ -1,0 +1,36 @@
+<!-- <div class="container">
+   
+    <div class="toast-container position-absolute p-3" style="position: absolute; top: 10px; right: 10px; z-index:999 ;">
+        <div class="toast show bg-white" id="errorToast" role="alert" aria-live="assertive" aria-atomic="true"
+            data-bs-autohide="false">
+            <div class="toast-header text-dark">
+                <strong class="me-auto"><i class="bi-exclamation-octagon-fill"></i> &nbsp;Error</strong>
+
+                <button type="button" class="btn-close me-2 m-auto" title="Close" onclick="hideerror();"
+                    data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                {{data.error.message}}
+            </div>
+        </div>
+        
+    </div>
+    
+</div> -->
+
+<div class="container position-absolute p-3">
+    <div class="row g-4 justify-content-md-center">
+        <div class="toast show align-items-center text-white bg-primary border-0" id="errorToast" role="alert"
+            aria-live="assertive" aria-atomic="true" data-bs-autohide="false">
+            <div class="d-flex">
+                <div class="toast-body">
+                    {{data.error.message}}
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+                    aria-label="Close" title="Close" onclick="hideerror();"></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>
