@@ -15,7 +15,7 @@ This repository contains a web application for downloading YouTube videos using 
 
 1. Clone the repository:
    ```
-   git clone https://github.com/yourusername/YouTubeDownloader.git
+   git clone https://github.com/nileshdeshmukh-code/online-video-downloader.git
    ```
 
 2. Navigate to the project directory:
