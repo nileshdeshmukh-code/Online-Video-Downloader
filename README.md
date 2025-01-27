@@ -20,7 +20,7 @@ This repository contains a web application for downloading YouTube videos using 
 
 2. Navigate to the project directory:
    ```
-   cd YouTubeDownloader
+   cd online-video-downloader
    ```
 
 3. Create and activate a virtual environment:
